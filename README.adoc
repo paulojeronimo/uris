@@ -6,6 +6,7 @@
 YAML URIs file: link:uris.yaml[].
 
 The file {this-repo-gh-pages}/uris.json is automatically built by https://travis-ci.org/[Travis CI] when a new version of uris.yaml has pushed to GitHub.
+The {this-repo-gh-pages}/index.html shows you the rendered list of these URIs by using the link:src/app.js[] script.
 
 == Local development and test
 

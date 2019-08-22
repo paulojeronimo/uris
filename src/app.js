@@ -1,5 +1,11 @@
 'use strict'
 
+const checkResponse = response => {
+  if (!response.ok)
+    throw Error(`${response.statusText} - ${response.url}`)
+  return response
+}
+
 const handleJson = json => {
   const ol = document.querySelector('ol')
   let li, a, text
@@ -17,9 +23,7 @@ const handleJson = json => {
 }
 
 fetch('./uris.json')
+  .then(checkResponse)
   .then(resp => resp.json())
   .then(handleJson)
-  .catch(error => {
-    const h2 = document.querySelector('h2')
-    h2.textContent = "Could not load or parse uris.json"
-  })
+  .catch(error => document.querySelector('h2').textContent = error)
