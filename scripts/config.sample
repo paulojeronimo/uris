@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+PROJECT_BASE_DIR=`cd "$BASE_DIR"/..; pwd`
+PROJECT_DIR=`basename "$PROJECT_BASE_DIR"`
+BUILT_DIR=built
+SERVE_PORT=${SERVE_PORT:-5000}
+
+source "$PROJECT_BASE_DIR/.travis.variables" || true

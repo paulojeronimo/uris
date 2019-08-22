@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#
+# The variables in this file are used by ./scripts/{local,publish}
+#
+
+GH_USER=${GH_USER:-paulojeronimo}
+GH_EMAIL=${GH_EMAIL:-paulojeronimo@gmail.com}
+GH_REF=${GH_REF:-github.com/paulojeronimo/uris}
+
+# To generate: https://github.com/settings/tokens
+GH_TOKEN=${GH_TOKEN:-XXXXXXXXXXXXXXXXXXXXXXXX}

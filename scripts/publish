@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+DEBUG=${DEBUG:-false}
+$DEBUG && set -x || set +x
+
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+# go to the built directory and create a new git repo
+cd $BUILT_DIR || exit 1 # abort script if folder does not exists
+
+# initiate a new git repo
+git init
+
+# inside this repo we'll pretend to be a new user
+git config user.name "${GH_USER:-Travis CI}"
+git config user.email "${GH_EMAIL}"
+
+# The first and only commit to this new Git repo contains all the
+# files present with the commit message "Deploy to GitHub Pages".
+git add -A
+git commit -m "Deploy to GitHub Pages $(date)"
+
+# Force push from the current repo's master branch to the remote
+# repo's gh-pages branch. (All previous history on the gh-pages branch
+# will be lost, since we are overwriting it.) We redirect any output to
+# /dev/null to hide any sensitive credential data that might otherwise be exposed.
+git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages &> /dev/null

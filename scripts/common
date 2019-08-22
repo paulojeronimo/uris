@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+[ "$BASE_DIR" ] || { echo "BASE_DIR not defined!"; exit 1; }
+
+found=false
+for cfg in config{,.sample}
+do
+  source "$BASE_DIR"/$cfg 2> /dev/null && { found=true; break; }
+done
+$found || echo "$cfg not found!"
+
+[ "$TMPDIR" ] && {
+  [ "${TMPDIR: -1}" = / ] && \
+    log_dir=${TMPDIR%?}/$PROJECT_DIR || \
+    log_dir=$TMPDIR/$PROJECT_DIR
+} || log_dir=/tmp/$PROJECT_DIR
+mkdir -p $log_dir
+
+log=$log_dir/`date +%s`.log
+{
+  echo "Log file: $log"
+  echo "Date and time: `date`"
+  echo "Configurations loaded from \"$cfg\" ..."
+} | tee -a $log
+
+check-npm-cmd() {
+  type $1 &> /dev/null || {
+    echo "$1 is not installed!"
+    echo "Try run this: \"npm install -g $1\""
+    exit 1
+  }
+}
+
+check-npx() {
+  check-npm-cmd npx
+}
+
+check-serve() {
+  check-npm-cmd serve
+}
+
+list-tasks() {
+  local tasks=$(sed -n 's/_\(.*\)() {/\1/p' $0 | tr '\n' '|')
+  echo -n ${tasks%?}
+}
+
+main() {
+  [ "$1" ] && {
+    cd "$PROJECT_BASE_DIR"
+    task=_$1
+    type "$task" &> /dev/null && {
+      shift
+      {
+        echo "Running: $task $@"
+        $task "$@" 2>&1
+      } | tee -a $log
+    }
+  } || echo "$0 <`list-tasks`>"
+}
+
+# vim: set ts=2 sw=2 et:

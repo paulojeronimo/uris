@@ -1,0 +1,22 @@
+= YAML URIs
+
+YAML URIs file: link:uris.yaml[].
+
+Conversion to `uris.json`:
+
+----
+$ ./scripts/local build
+$ tree built
+built
+`-- uris.json
+
+0 directories, 1 file
+----
+
+Local serve via HTTP:
+
+----
+$ ./scripts/local serve
+----
+
+Open http://localhost:5000/uris.json

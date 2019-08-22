@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+DEBUG=${DEBUG:-false}
+$DEBUG && set -x || set +x
+
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+check-npx
+
+_build() {
+  [ -d "$BUILT_DIR" ] && rm -rf "$BUILT_DIR"
+  mkdir -p "$BUILT_DIR"
+  npx js-yaml uris.yaml > "$BUILT_DIR"/uris.json
+}
+
+_serve() {
+  check-serve
+  [ -d "$BUILT_DIR" ] || {
+    echo "$BUILT_DIR does not exists"
+    exit 1
+  }
+  serve -l $SERVE_PORT "$BUILT_DIR"
+}
+
+_publish() {
+  _build
+  true || {
+    local ghs=${!GH@}
+    for gh in $ghs; do
+      echo "$gh=${!gh}"
+    done
+  }
+  "$BASE_DIR"/publish
+}
+
+main "$@"
+
+# vim: set ts=2 sw=2 et:

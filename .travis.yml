@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - "node"
+script: ./scripts/local build
+after_success:
+  - bash ./scripts/publish
+branches:
+  only:
+    - master
