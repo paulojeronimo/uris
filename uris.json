@@ -1,0 +1,10 @@
+{
+  "Ethereum": {
+    "uri": "https://github.com/ethereum/",
+    "description": "Ethereum is a World Wide Computer"
+  },
+  "Geth": {
+    "uri": "https://github.com/ethereum/go-ethereum",
+    "description": "Official Go implementation of the Ethereum protocol"
+  }
+}
