@@ -1,22 +1,31 @@
 = YAML URIs
+:my-gh-pages: https://paulojeronimo.github.io
+:this-repo: uris
+:this-repo-gh-pages: {my-gh-pages}/{this-repo}
 
 YAML URIs file: link:uris.yaml[].
 
-Conversion to `uris.json`:
+The file {this-repo-gh-pages}/uris.json is automatically built by https://travis-ci.org/[Travis CI] when a new version of uris.yaml has pushed to GitHub.
+
+== Local development and test
+
+`uris.json` generation:
 
 ----
 $ ./scripts/local build
-$ tree built
-built
+$ tree built/
+built/
+|-- app.js
+|-- index.html
 `-- uris.json
 
-0 directories, 1 file
+0 directories, 3 files
 ----
 
-Local serve via HTTP:
+Serve via HTTP:
 
 ----
 $ ./scripts/local serve
 ----
 
-Open http://localhost:5000/uris.json
+Open http://localhost:5000/

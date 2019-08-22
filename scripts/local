@@ -11,6 +11,7 @@ _build() {
   [ -d "$BUILT_DIR" ] && rm -rf "$BUILT_DIR"
   mkdir -p "$BUILT_DIR"
   npx js-yaml uris.yaml > "$BUILT_DIR"/uris.json
+  cp src/* "$BUILT_DIR"
 }
 
 _serve() {
